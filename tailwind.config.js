@@ -6,6 +6,7 @@ module.exports = {
             colors: {
                 sblue: "#192734",
                 swhite: "#fefefd",
+                slgreen: "#c6e0cc",
             },
         },
     },
