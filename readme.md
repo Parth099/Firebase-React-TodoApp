@@ -6,6 +6,7 @@ Project to learning React/TS and Firebase builds.
 + Typescript
 + React
     + Styles Components 
+    + react Router v6
 + Firebase
     + Firebase Authentication
     + Firebase Firestore (Realtime Database)
