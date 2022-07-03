@@ -2,11 +2,10 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
-        <div>
-            <h1>App</h1>
+        <div className="nav-bar w-full bg-sblue secondary-font">
+            <h1 className="title-font text-5xl p-4 text-swhite">🔥 TodoApp </h1>
+            <div className="sign-in-bar"></div>
         </div>
     );
 }
