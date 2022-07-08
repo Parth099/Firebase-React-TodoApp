@@ -8,6 +8,9 @@ module.exports = {
                 swhite: "#fefefd",
                 slgreen: "#c6e0cc",
             },
+            width: {
+                160: "40rem",
+            },
         },
     },
     plugins: [],

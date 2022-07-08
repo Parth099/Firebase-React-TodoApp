@@ -1,13 +1,13 @@
 /* fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Roboto:ital,wght@0,400;0,500;1,500&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 .title-font {
     font-family: "Poppins", Arial, Helvetica, sans-serif;
     font-weight: 800;
 }
 
 .secondary-font {
-    font-family: "Oxygen", Helvetica, sans-serif;
+    font-family: "Inter", sans-serif;
 }
 /* reset */
 
@@ -150,4 +150,18 @@ body {
 }
 
 /* custom styles */
+.login-label {
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 5px;
+}
 
+.login-input {
+    border: 0.5px solid rgb(172, 172, 172);
+    padding: 8px 6px;
+    border-radius: 5px;
+}
+
+.login-input:focus {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
