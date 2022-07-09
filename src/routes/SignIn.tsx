@@ -1,10 +1,21 @@
-import React, { RefObject, useRef } from "react";
+import { RefObject, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
+//auth context
+import { useAuth } from "../contexts/authContext";
 
 export default function SignIn() {
     //refs to access dom elements
     const emailRef = useRef() as RefObject<HTMLInputElement>;
     const passwordConfRef = useRef() as RefObject<HTMLInputElement>;
     const passwordRef = useRef() as RefObject<HTMLInputElement>;
+
+    //auth
+    const authContext = useAuth();
+    let signUpfunc: Function = () => {};
+    if (authContext?.signup) {
+        signUpfunc = authContext.signup;
+    }
 
     //handle acc creation
     const handleNewAcc = () => {
@@ -17,8 +28,9 @@ export default function SignIn() {
 
         //retype was wrong
         if (password != confPassword) return;
-
-        console.log(email, password);
+        signUpfunc(email, password).catch((err: Error) => {
+            console.log(err);
+        });
     };
 
     return (
@@ -45,6 +57,9 @@ export default function SignIn() {
                         Confirm Password:
                     </label>
                     <input id="passwordConf" className="login-input" type="password" placeholder="Retype your password" ref={passwordConfRef} />
+
+                    <p className="bg-red-300 text-red-800 p-2 mt-2 rounded-lg border-red-800 border-1">{"err"}</p>
+
                     <button
                         type="submit"
                         className="mt-3 py-2 text-3xl font-bold text-white rounded-md transition ease-in-out delay-150 duration-300 bg-blue-500 hover:bg-indigo-500"
@@ -52,7 +67,13 @@ export default function SignIn() {
                         Login in
                     </button>
                 </form>
-                <p className="text-center mt-1">Aready have an account? Log In</p>
+
+                <p className="text-center mt-3 text-xl">
+                    Aready have an account?{" "}
+                    <Link to={"/sign-in"} className="text-blue-500 hover:underline hover:text-blue-900">
+                        Log in
+                    </Link>
+                </p>
             </div>
         </section>
     );
