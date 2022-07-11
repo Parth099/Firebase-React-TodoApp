@@ -54,7 +54,7 @@ export default function SignIn() {
     return (
         <section className="w-100 flex justify-center secondary-font">
             <div className="signup-card-cont w-160 mt-10 p-5 bg-swhite rounded-lg shadow-lg">
-                <div className="font-semibold text-3xl">Login</div>
+                <div className="header-font font-semibold text-3xl">"Login"</div>
                 <form
                     className="flex flex-col"
                     onSubmit={(e) => {

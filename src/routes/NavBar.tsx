@@ -13,7 +13,7 @@ export default function NavBar() {
     return (
         <div className="nav-bar w-full bg-sblue secondary-font shadow-2xl p-4 text-swhite flex justify-between items-center">
             <Link to={"/"}>
-                <h1 className="title-font text-5xl">🔥 TodoApp</h1>
+                <h1 className="header-font  text-5xl">🔥 "TodoApp"</h1>
             </Link>
             {!currentUser && (
                 <div className="sign-in-bar">
