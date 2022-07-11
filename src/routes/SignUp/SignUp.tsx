@@ -1,5 +1,5 @@
 import { RefObject, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //auth context
 import { useAuth } from "../../contexts/authContext";
@@ -10,8 +10,12 @@ export default function SignUp() {
     const passwordConfRef = useRef() as RefObject<HTMLInputElement>;
     const passwordRef = useRef() as RefObject<HTMLInputElement>;
 
+    //block spam and show err
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    //send usr to link
+    const navigate = useNavigate();
 
     //auth
     const authContext = useAuth();
@@ -46,7 +50,8 @@ export default function SignUp() {
             .then(() => {
                 //clear error message
                 setErrorMessage("");
-                //reroute to actual page
+                //reroute to login
+                navigate("/sign-in");
             })
             .catch((err: Error) => {
                 setErrorMessage("Account may already exist");

@@ -3,6 +3,7 @@ import MailLogo from "../assets/mail.svg";
 import "../App.css";
 import { useAuth } from "../contexts/authContext";
 import { auth } from "../../firebase-config";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
     const authContext = useAuth();
@@ -11,7 +12,9 @@ export default function NavBar() {
 
     return (
         <div className="nav-bar w-full bg-sblue secondary-font shadow-2xl p-4 text-swhite flex justify-between items-center">
-            <h1 className="title-font text-5xl">🔥 TodoApp</h1>
+            <Link to={"/"}>
+                <h1 className="title-font text-5xl">🔥 TodoApp</h1>
+            </Link>
             {!currentUser && (
                 <div className="sign-in-bar">
                     <div className="sign-in flex gap-4 font-bold">

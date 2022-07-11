@@ -1,5 +1,5 @@
 import { RefObject, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //auth context
 import { useAuth } from "../../contexts/authContext";
@@ -12,6 +12,7 @@ export default function SignIn() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+    const navigate = useNavigate();
     //auth
     const authContext = useAuth();
     let loginfunc: Function = () => {};
@@ -38,6 +39,7 @@ export default function SignIn() {
             .then(() => {
                 //clear error message
                 setErrorMessage("");
+                navigate("/tasks");
             })
             .catch((err: Error) => {
                 setErrorMessage("Error Logging in");
