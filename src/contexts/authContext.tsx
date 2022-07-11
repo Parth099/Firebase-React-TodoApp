@@ -1,5 +1,5 @@
 //context and state
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 //auth
 import { auth } from "../../firebase-config";
@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/aut
 
 //typing for interface object
 interface SignInInterface {
-    currentUser: Object;
+    currentUser: Object | undefined;
     signup: (e: string, p: string) => Promise<any>;
 }
 
@@ -23,7 +23,7 @@ export function useAuth() {
 //provides the context
 export function AuthProvider({ children }: any) {
     //holds auth info
-    const [currentUser, setCurrentUser] = useState({});
+    const [currentUser, setCurrentUser] = useState<Object | undefined>();
 
     const signup = (email: string, password: string) => {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -33,7 +33,12 @@ export function AuthProvider({ children }: any) {
         const unsub = onAuthStateChanged(auth, (user) => {
             //on acc creation sign the person in
             if (!user) return;
-            setCurrentUser(user);
+            if (Object.keys(user).length === 0) {
+                //set to undefined for easy react render later
+                setCurrentUser(undefined);
+            } else {
+                setCurrentUser(user);
+            }
         });
 
         //stop listening on component unmount
@@ -49,3 +54,11 @@ export function AuthProvider({ children }: any) {
 }
 
 //auth functions
+
+/*
+Above is a very important react design pattern for context
+
+Here is how it works:
+AuthContext is first created using the context hook. It will be the provider. 
+Then we render all the children under the provider as they will be able to access its context
+*/

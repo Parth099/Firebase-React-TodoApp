@@ -2,7 +2,7 @@ import { RefObject, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 //auth context
-import { useAuth } from "../contexts/authContext";
+import { useAuth } from "../../contexts/authContext";
 
 export default function SignIn() {
     //refs to access dom elements
@@ -18,6 +18,7 @@ export default function SignIn() {
     if (authContext?.signup) {
         signUpfunc = authContext.signup;
     }
+    console.log(authContext);
 
     //handle acc creation
     const handleNewAcc = () => {
