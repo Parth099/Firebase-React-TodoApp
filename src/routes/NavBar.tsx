@@ -7,28 +7,41 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
     const authContext = useAuth();
-    auth.signOut();
     const currentUser = authContext?.currentUser;
+    console.log(currentUser);
+
+    const handleLogOut = () => {
+        authContext?.logout().then(() => {
+            console.log("hit logout", currentUser);
+        });
+    };
 
     return (
         <div className="nav-bar w-full bg-sblue secondary-font shadow-2xl p-4 text-swhite flex justify-between items-center">
             <Link to={"/"}>
                 <h1 className="header-font  text-5xl">🔥 "TodoApp"</h1>
             </Link>
-            {!currentUser && (
-                <div className="sign-in-bar">
-                    <div className="sign-in flex gap-4 font-bold">
-                        <button type="button" className="flex gap-1 items-center pr-3 bg-swhite rounded-md hover:bg-slgreen" onClick={() => {}}>
-                            <img alt="Google Logo" src={GoogleLogo} className="w-14 h-14" />
-                            <p className="block text-sblue secondary-font text-2xl">Login</p>
-                        </button>
-                        <button type="button" className="flex gap-1 items-center pl-1 pr-3 bg-swhite rounded-md hover:bg-slgreen">
-                            <img alt="Google Logo" src={MailLogo} className="w-14 h-14" />
-                            <p className="block text-sblue secondary-font text-2xl">Login</p>
-                        </button>
-                    </div>
-                </div>
-            )}
+
+            <div className="sign-in-bar">
+                <div className="sign-in flex gap-4 font-bold"></div>
+                {!currentUser && (
+                    <Link to={"/sign-in"} className="block p-3 px-5 bg-swhite hover:bg-slgreen">
+                        <p className="block text-sblue header-font text-2xl">"Log in"</p>
+                    </Link>
+                )}
+                {currentUser && (
+                    <Link to={"/sign-in"} className="block p-3 px-5 bg-swhite hover:bg-slgreen" onClick={handleLogOut}>
+                        <p className="block text-sblue header-font text-2xl">"Log out"</p>
+                    </Link>
+                )}
+            </div>
         </div>
     );
 }
+
+/* google login tsx
+<button type="button" className="flex gap-1 items-center pr-3 bg-swhite rounded-md hover:bg-slgreen" onClick={() => {}}>
+    <img alt="Google Logo" src={GoogleLogo} className="w-14 h-14" />
+    <p className="block text-sblue secondary-font text-2xl">Login</p>
+</button>
+*/

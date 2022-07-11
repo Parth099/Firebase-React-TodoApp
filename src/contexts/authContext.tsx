@@ -3,13 +3,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 //auth
 import { auth } from "../../firebase-config";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 //typing for interface object
 interface SignInInterface {
     currentUser: Object | undefined;
     signup: (e: string, p: string) => Promise<any>;
     login: (e: string, p: string) => Promise<any>;
+    logout: () => Promise<void>;
 }
 
 //this provides the values that will be globalized
@@ -35,20 +36,20 @@ export function AuthProvider({ children }: any) {
         return signInWithEmailAndPassword(auth, email, password);
     };
 
+    const logout = () => {
+        return signOut(auth);
+    };
+
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, (user) => {
-            //on acc creation sign the person in
-            if (!user) {
-                setFirebaseLoading(false);
-                return;
-            }
-            if (Object.keys(user).length === 0) {
-                //set to undefined for easy react render later
+            if (!user || Object.keys(user).length === 0) {
                 setCurrentUser(undefined);
             } else {
                 setCurrentUser(user);
             }
-            setFirebaseLoading(false); //done loading
+
+            //allow children to render after initial mount
+            setFirebaseLoading(false);
         });
 
         //stop listening on component unmount
@@ -59,6 +60,7 @@ export function AuthProvider({ children }: any) {
         currentUser,
         signup,
         login,
+        logout,
     };
 
     //render only if loading of the auth state has finished
