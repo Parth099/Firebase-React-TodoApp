@@ -10,6 +10,8 @@ export default function SignIn() {
     const passwordConfRef = useRef() as RefObject<HTMLInputElement>;
     const passwordRef = useRef() as RefObject<HTMLInputElement>;
 
+    const [errorMessage, setErrorMessage] = useState("");
+
     //auth
     const authContext = useAuth();
     let signUpfunc: Function = () => {};
@@ -24,13 +26,24 @@ export default function SignIn() {
         const confPassword = passwordConfRef.current?.value;
 
         //if both are invalid
-        if (!email || !password || !confPassword) return;
+        if (!email || !password || !confPassword) {
+            setErrorMessage("Fill in each field");
+            return;
+        }
 
         //retype was wrong
-        if (password != confPassword) return;
-        signUpfunc(email, password).catch((err: Error) => {
-            console.log(err);
-        });
+        if (password != confPassword) {
+            setErrorMessage("Confirmed password does not match");
+            return;
+        }
+        signUpfunc(email, password)
+            .then(() => {
+                //clear error message
+                setErrorMessage("");
+            })
+            .catch((err: Error) => {
+                setErrorMessage("Account may already exist");
+            });
     };
 
     return (
@@ -58,7 +71,7 @@ export default function SignIn() {
                     </label>
                     <input id="passwordConf" className="login-input" type="password" placeholder="Retype your password" ref={passwordConfRef} />
 
-                    <p className="bg-red-300 text-red-800 p-2 mt-2 rounded-lg border-red-800 border-1">{"err"}</p>
+                    {errorMessage && <p className="bg-red-300 text-red-800 p-2 mt-2 rounded-lg border-red-800 border-1">{errorMessage}</p>}
 
                     <button
                         type="submit"

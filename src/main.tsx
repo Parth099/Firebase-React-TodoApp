@@ -15,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
             <Route path="/" element={<App />}>
                 <Route path="/login" element={<SignIn />}></Route>
+                <Route path="*"></Route>
             </Route>
 
             <Route path="*" element={""}></Route>
