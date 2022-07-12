@@ -20,10 +20,10 @@ export default function TasksView() {
     return (
         <div className="w-100 flex flex-col items-center secondary-font">
             <div className="task-card-cont-1 w-180 mt-10 p-5 bg-swhite rounded-t-lg shadow-2xl">
-                <div className="header-font font-semibold text-3xl">"Add Tasks"</div>
+                <div className="header-font font-semibold text-3xl">Add Tasks</div>
             </div>
             <div className="task-card-cont-1 w-180 mt-10 p-5 bg-swhite rounded-b-lg shadow-2xl">
-                <div className="header-font font-semibold text-3xl">"Taskview"</div>
+                <div className="header-font font-semibold text-3xl">Taskview</div>
             </div>
         </div>
     );

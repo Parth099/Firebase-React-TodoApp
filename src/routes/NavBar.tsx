@@ -19,19 +19,21 @@ export default function NavBar() {
     return (
         <div className="nav-bar w-full bg-sblue secondary-font shadow-2xl p-4 text-swhite flex justify-between items-center">
             <Link to={"/"}>
-                <h1 className="header-font  text-5xl">🔥 "TodoApp"</h1>
+                <h1 className="text-5xl">
+                    🔥 <span className="header-font">Todoapp</span>
+                </h1>
             </Link>
 
             <div className="sign-in-bar">
                 <div className="sign-in flex gap-4 font-bold"></div>
                 {!currentUser && (
                     <Link to={"/sign-in"} className="block p-3 px-5 bg-swhite hover:bg-slgreen">
-                        <p className="block text-sblue header-font text-2xl">"Log in"</p>
+                        <p className="block text-sblue header-font text-2xl">Log in</p>
                     </Link>
                 )}
                 {currentUser && (
                     <Link to={"/sign-in"} className="block p-3 px-5 bg-swhite hover:bg-slgreen" onClick={handleLogOut}>
-                        <p className="block text-sblue header-font text-2xl">"Log out"</p>
+                        <p className="block text-sblue header-font text-2xl">Log out</p>
                     </Link>
                 )}
             </div>

@@ -65,7 +65,7 @@ export default function SignUp() {
     return (
         <section className="w-100 flex justify-center secondary-font">
             <div className="signup-card-cont w-160 mt-10 p-5 bg-swhite rounded-lg shadow-lg">
-                <div className="header-font font-semibold text-3xl">"New Account Creation"</div>
+                <div className="header-font font-semibold text-3xl">New Account Creation</div>
                 <form
                     className="flex flex-col"
                     onSubmit={(e) => {
