@@ -10,6 +10,7 @@ module.exports = {
             },
             width: {
                 160: "40rem",
+                180: "45rem",
             },
             borderWidth: {
                 1: "1px",

@@ -10,6 +10,7 @@ import App from "./App"; //nav bar
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./routes/SignUp/SignUp";
 import SignIn from "./routes/SignIn/SignIn";
+import TasksView from "./routes/Tasks/Tasks";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<App />}>
                 <Route path="/sign-up" element={<SignUp />}></Route>
                 <Route path="/sign-in" element={<SignIn />}></Route>
+                <Route path="/tasks" element={<TasksView />}></Route>
                 <Route path="*"></Route>
             </Route>
 
