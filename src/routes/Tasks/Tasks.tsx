@@ -43,6 +43,7 @@ export default function TasksView() {
 
         if (!taskName || !priority || !date) {
             setAddTaskError("Fill in each field");
+            return;
         }
 
         // console.log(taskName, priority, date);
@@ -53,10 +54,15 @@ export default function TasksView() {
             taskName,
             priority,
             date,
-        }).then(() => {
-            //enable save again
-            setSentRequest(false);
-        });
+        })
+            .then(() => {
+                //enable save again
+                setSentRequest(false);
+                setAddTaskError(""); //success!
+            })
+            .catch(() => {
+                setAddTaskError("Database Error");
+            });
     };
 
     return (
@@ -96,6 +102,7 @@ export default function TasksView() {
                             <input type="date" id="due-date" className="border-b py-1 text-xl" ref={dateRef} />
                         </div>
                     </div>
+                    {addTaskError && <p className="bg-red-100 text-red-800 p-2 mt-2 rounded-lg border-red-600 border-1">{addTaskError}</p>}
                     <button
                         disabled={sentRequest}
                         type="submit"

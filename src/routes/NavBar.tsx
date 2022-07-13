@@ -3,18 +3,34 @@ import MailLogo from "../assets/mail.svg";
 import "../App.css";
 import { useAuth } from "../contexts/authContext";
 import { auth } from "../../firebase-config";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function NavBar() {
     const authContext = useAuth();
     const currentUser = authContext?.currentUser;
-    console.log(currentUser);
 
     const handleLogOut = () => {
         authContext?.logout().then(() => {
             console.log("hit logout", currentUser);
         });
     };
+
+    //for a reroute on mount (for first time use)
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        //not signed in, do it
+        if (!authContext?.currentUser) {
+            navigate("/sign-in");
+        }
+        //ATP user is logged in
+        else if (location.pathname != "/tasks") {
+            //else skip to tasks page
+            navigate("/tasks");
+        }
+    }, []);
 
     return (
         <div className="nav-bar w-full bg-sblue secondary-font shadow-2xl p-4 text-swhite flex justify-between items-center">
