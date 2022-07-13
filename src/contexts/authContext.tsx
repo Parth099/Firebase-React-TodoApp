@@ -3,11 +3,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 //auth
 import { auth } from "../../firebase-config";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from "firebase/auth";
 
 //typing for interface object
 interface SignInInterface {
-    currentUser: Object | undefined;
+    currentUser: User | undefined;
     signup: (e: string, p: string) => Promise<any>;
     login: (e: string, p: string) => Promise<any>;
     logout: () => Promise<void>;
@@ -25,7 +25,7 @@ export function useAuth() {
 //provides the context
 export function AuthProvider({ children }: any) {
     //holds auth info
-    const [currentUser, setCurrentUser] = useState<Object | undefined>();
+    const [currentUser, setCurrentUser] = useState<User | undefined>();
     const [firebaseLoading, setFirebaseLoading] = useState(true);
 
     const signup = (email: string, password: string) => {

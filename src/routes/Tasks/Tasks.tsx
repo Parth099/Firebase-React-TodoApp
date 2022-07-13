@@ -2,7 +2,9 @@ import React, { RefObject, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 
+//db
 import { db } from "../../../firebase-config";
+import { addDoc, collection, CollectionReference, DocumentData } from "firebase/firestore";
 
 export default function TasksView() {
     //auth stuff
@@ -16,6 +18,12 @@ export default function TasksView() {
             navigate("/sign-in");
         }
     }, []);
+
+    //database actions
+    let collectionRef: CollectionReference<DocumentData>; //undefined unless required props exist
+    if (authContext?.currentUser && authContext.currentUser?.email) {
+        collectionRef = collection(db, authContext.currentUser.email);
+    }
 
     //to show errors
     const [addTaskError, setAddTaskError] = useState("");
@@ -38,7 +46,17 @@ export default function TasksView() {
         }
 
         // console.log(taskName, priority, date);
-        // send request here
+        if (!collectionRef) return;
+
+        setSentRequest(true); //block anymore requests
+        addDoc(collectionRef, {
+            taskName,
+            priority,
+            date,
+        }).then(() => {
+            //enable save again
+            setSentRequest(false);
+        });
     };
 
     return (
@@ -63,9 +81,10 @@ export default function TasksView() {
                                 Priority
                             </label>
                             <select name="cars" id="add-task" className="mt-3" ref={priorityRef}>
-                                <option value="Low" selected={true}>
-                                    Low
+                                <option value="DEFAULT" disabled>
+                                    Choose a Priority
                                 </option>
+                                <option value="Low">Low</option>
                                 <option value="Medium">Medium</option>
                                 <option value="High">High</option>
                             </select>
