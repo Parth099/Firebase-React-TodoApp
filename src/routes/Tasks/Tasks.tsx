@@ -5,6 +5,8 @@ import { useAuth } from "../../contexts/authContext";
 //db
 import { db } from "../../../firebase-config";
 import { addDoc, collection, CollectionReference, DocumentData, DocumentSnapshot, onSnapshot } from "firebase/firestore";
+import TaskItem from "./TaskItem";
+import { TaskData } from "./TaskDataInterface";
 
 export default function TasksView() {
     //auth stuff
@@ -26,7 +28,7 @@ export default function TasksView() {
     }
 
     //data state
-    const [taskData, setTaskData] = useState<Array<Object> | null>(null);
+    const [taskData, setTaskData] = useState<Array<TaskData>>([]);
 
     //fetch data
     useEffect(() => {
@@ -34,9 +36,10 @@ export default function TasksView() {
         return onSnapshot(collectionRef, (collectionSnapShot) => {
             const data = collectionSnapShot.docs.map((doc) => {
                 const docData = doc.data();
-                return { ...docData, id: doc.id };
+
+                return { taskName: docData.taskName, date: docData.date, dateCreated: docData.dateCreated, id: doc.id, priority: docData.priority };
             });
-            console.log(data);
+            setTaskData(data);
         });
     }, []);
 
@@ -130,6 +133,20 @@ export default function TasksView() {
             </div>
             <div className="task-card-cont-1 w-180 mt-10 p-5 bg-swhite rounded-b-lg shadow-2xl">
                 <div className="header-font font-semibold text-3xl">Taskview</div>
+                <table className="w-full text-left">
+                    <tbody>
+                        <tr className="">
+                            <th>Task Name</th>
+                            <th>Piority</th>
+                            <th>Due Date</th>
+                        </tr>
+                        {taskData.map((data) => {
+                            //render Taskitem from fetected
+                            const { date, dateCreated, priority, taskName, ...rest } = data;
+                            return <TaskItem date={date} dateCreated={dateCreated} priority={priority} taskName={taskName} key={data.id} />;
+                        })}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
