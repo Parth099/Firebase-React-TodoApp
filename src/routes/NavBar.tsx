@@ -11,8 +11,8 @@ export default function NavBar() {
     const currentUser = authContext?.currentUser;
 
     const handleLogOut = () => {
-        authContext?.logout().then(() => {
-            console.log("hit logout", currentUser);
+        authContext?.logout().catch((err) => {
+            console.log(err);
         });
     };
 

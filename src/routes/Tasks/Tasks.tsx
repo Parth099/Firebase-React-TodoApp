@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/authContext";
 
 //db
 import { db } from "../../../firebase-config";
-import { addDoc, collection, CollectionReference, DocumentData } from "firebase/firestore";
+import { addDoc, collection, CollectionReference, DocumentData, DocumentSnapshot, onSnapshot } from "firebase/firestore";
 
 export default function TasksView() {
     //auth stuff
@@ -24,6 +24,21 @@ export default function TasksView() {
     if (authContext?.currentUser && authContext.currentUser?.email) {
         collectionRef = collection(db, authContext.currentUser.email);
     }
+
+    //data state
+    const [taskData, setTaskData] = useState<Array<Object> | null>(null);
+
+    //fetch data
+    useEffect(() => {
+        //straight return so we can use the rvalue to unmount the listener
+        return onSnapshot(collectionRef, (collectionSnapShot) => {
+            const data = collectionSnapShot.docs.map((doc) => {
+                const docData = doc.data();
+                return { ...docData, id: doc.id };
+            });
+            console.log(data);
+        });
+    }, []);
 
     //to show errors
     const [addTaskError, setAddTaskError] = useState("");
@@ -54,6 +69,7 @@ export default function TasksView() {
             taskName,
             priority,
             date,
+            dateCreated: Date.now(), //for the sort
         })
             .then(() => {
                 //enable save again
