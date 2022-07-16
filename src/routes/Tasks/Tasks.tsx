@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/authContext";
 
 //db
 import { db } from "../../../firebase-config";
-import { addDoc, collection, CollectionReference, DocumentData, DocumentSnapshot, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, CollectionReference, DocumentData, DocumentSnapshot, onSnapshot, orderBy, query } from "firebase/firestore";
 import TaskItem from "./TaskItem";
 import { OrderByField, TaskData } from "./TaskDataInterface";
 
@@ -39,10 +39,15 @@ export default function TasksView() {
     //fetch data
     useEffect(() => {
         //straight return so we can use the rvalue to unmount the listener
-        return onSnapshot(collectionRef, (collectionSnapShot) => {
+        let q = query(collectionRef);
+
+        if (orderByClause) {
+            q = query(collectionRef, orderBy(orderByClause));
+        }
+
+        return onSnapshot(q, (collectionSnapShot) => {
             const data = collectionSnapShot.docs.map((doc) => {
                 const docData = doc.data();
-
                 return { taskName: docData.taskName, date: docData.date, dateCreated: docData.dateCreated, id: doc.id, priority: docData.priority };
             });
             setTaskData(data);
