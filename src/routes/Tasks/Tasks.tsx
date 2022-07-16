@@ -6,7 +6,10 @@ import { useAuth } from "../../contexts/authContext";
 import { db } from "../../../firebase-config";
 import { addDoc, collection, CollectionReference, DocumentData, DocumentSnapshot, onSnapshot } from "firebase/firestore";
 import TaskItem from "./TaskItem";
-import { TaskData } from "./TaskDataInterface";
+import { OrderByField, TaskData } from "./TaskDataInterface";
+
+//assets
+import TriangleArrowDown from "../../assets/TriangleArrowDown.png";
 
 export default function TasksView() {
     //auth stuff
@@ -30,6 +33,9 @@ export default function TasksView() {
     //data state
     const [taskData, setTaskData] = useState<Array<TaskData>>([]);
 
+    //ordering of the data
+    const [orderByClause, setOrderByClause] = useState<OrderByField>("");
+
     //fetch data
     useEffect(() => {
         //straight return so we can use the rvalue to unmount the listener
@@ -41,7 +47,7 @@ export default function TasksView() {
             });
             setTaskData(data);
         });
-    }, []);
+    }, [orderByClause]);
 
     //to show errors
     const [addTaskError, setAddTaskError] = useState("");
@@ -137,8 +143,38 @@ export default function TasksView() {
                     <tbody className="">
                         <tr className="">
                             <th>Task Name</th>
-                            <th>Piority</th>
-                            <th>Due Date</th>
+                            <th>
+                                <div className="flex gap-2">
+                                    Priority
+                                    <img
+                                        className={`down-tri-button ${orderByClause === "priority" ? "flip-img" : ""}`}
+                                        src={TriangleArrowDown}
+                                        onClick={() => {
+                                            if (orderByClause) {
+                                                setOrderByClause("");
+                                            } else {
+                                                setOrderByClause("priority");
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </th>
+                            <th>
+                                <div className="flex gap-2">
+                                    Date Due
+                                    <img
+                                        className={`down-tri-button ${orderByClause === "date" ? "flip-img" : ""}`}
+                                        src={TriangleArrowDown}
+                                        onClick={() => {
+                                            if (orderByClause) {
+                                                setOrderByClause("");
+                                            } else {
+                                                setOrderByClause("date");
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </th>
                         </tr>
                         {taskData.map((data) => {
                             //render Taskitem from fetected

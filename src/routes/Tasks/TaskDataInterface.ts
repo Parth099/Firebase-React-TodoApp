@@ -1,4 +1,5 @@
 type PriorityStatus = "Low" | "Medium" | "High";
+export type OrderByField = "" | "priority" | "date";
 
 export interface TaskData {
     date: string;

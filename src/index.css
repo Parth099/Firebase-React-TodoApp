@@ -1,6 +1,6 @@
 /* fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Roboto:ital,wght@0,400;0,500;1,500&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @font-face {
     font-family: "HNB";
@@ -180,4 +180,10 @@ body {
 .header-font::before,
 .header-font::after {
     content: '"';
+}
+
+@layer {
+    .down-tri-button {
+        @apply w-3 h-3 self-center cursor-pointer;
+    }
 }
