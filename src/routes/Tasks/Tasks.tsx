@@ -134,7 +134,7 @@ export default function TasksView() {
             <div className="task-card-cont-1 w-180 mt-10 p-5 bg-swhite rounded-b-lg shadow-2xl">
                 <div className="header-font font-semibold text-3xl">Taskview</div>
                 <table className="w-full text-left">
-                    <tbody>
+                    <tbody className="">
                         <tr className="">
                             <th>Task Name</th>
                             <th>Piority</th>
